@@ -1,4 +1,6 @@
 #include <iostream>
+#include <unordered_set>
+
 #include "../data_structures/Graph.h"
 
 using namespace std;
@@ -11,7 +13,9 @@ using namespace std;
 template <class T>
 vector<T> dfs(Graph<T> *g, const T & source) {
     vector<int> res;
-    // TODO
+    Vertex<T> *v = g->findVertex(source);
+    if (v != nullptr) dfsVisit(v, res);
+
     return res;
 }
 
@@ -21,7 +25,11 @@ vector<T> dfs(Graph<T> *g, const T & source) {
  */
 template <class T>
 void dfsVisit(Vertex<T> *v, vector<T> & res) {
-    // TODO
+    vector<Edge<T> *> e = v->getAdj();
+    res.push_back(v->getInfo());
+    for (auto edge : e) {
+        if (std::find(res.begin(), res.end(), edge->getDest()->getInfo()) == res.end()) dfsVisit(edge->getDest(), res);
+    }
 }
 
 /****************** BFS ********************/
@@ -32,7 +40,27 @@ void dfsVisit(Vertex<T> *v, vector<T> & res) {
  */
 template <typename T>
 vector<T> bfs(Graph<T> *g, const T & source) {
-    vector<int> res;
-    // TODO
+    vector<T> res;
+    unordered_set<T> visited;
+
+    Vertex<T> *v = g->findVertex(source);
+    if (!v) return res;
+
+    queue<Vertex<T> *> q;
+    q.push(v);
+    visited.insert(v->getInfo());
+
+    while (!q.empty()) {
+        Vertex<T> *u = q.front();
+        q.pop();
+        res.push_back(u->getInfo());
+        for (auto edge : u->getAdj()) {
+            Vertex<T> *neighbor = edge->getDest();
+            if (visited.find(neighbor->getInfo()) == visited.end()) {
+                q.push(neighbor);
+                visited.insert(neighbor->getInfo());
+            }
+        }
+    }
     return res;
 }
