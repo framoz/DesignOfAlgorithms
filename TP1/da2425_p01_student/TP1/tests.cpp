@@ -246,7 +246,7 @@ void PrintNodesList(vector<int> v){
     cout << "}" << endl;
 }
 
-/*
+
 TEST(TP1_extratests, test_extratests) {
     vector<int> res;
     Graph<int> myGraph;
@@ -265,4 +265,3 @@ TEST(TP1_extratests, test_extratests) {
     res = topsort(&myGraph);
     PrintNodesList(res);
 }
- */

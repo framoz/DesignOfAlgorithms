@@ -28,7 +28,8 @@ void dfsVisit(Vertex<T> *v, vector<T> & res) {
     vector<Edge<T> *> e = v->getAdj();
     res.push_back(v->getInfo());
     for (auto edge : e) {
-        if (std::find(res.begin(), res.end(), edge->getDest()->getInfo()) == res.end()) dfsVisit(edge->getDest(), res);
+        if (std::find(res.begin(), res.end(), edge->getDest()->getInfo()) == res.end())
+            dfsVisit(edge->getDest(), res);
     }
 }
 
