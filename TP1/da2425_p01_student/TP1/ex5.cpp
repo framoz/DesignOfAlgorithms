@@ -1,38 +1,37 @@
 #include "../data_structures/Graph.h"
-#include "stack"
-using namespace std;
-
-#include <queue>
+#include <vector>
+#include <algorithm>
 
 
-
-template <typename T>
-void tarjanHelper(Vertex<T>* v, std::vector<std::vector<T>>& result, std::vector<Vertex<T>*>& stk, int& index) {
+template<typename T>
+void tarjanHelper(Vertex<T>* v, std::vector<Vertex<T>*>& stack, std::vector<std::vector<T>>& result, int& index) {
     v->setNum(index);
     v->setLow(index);
     index++;
-    stk.push_back(v);
+
+    stack.push_back(v);
     v->setProcessing(true);
 
-    for (Edge<T>* edge : v->getAdj()) {
-        Vertex<T>* w = edge->getDest();
+    for (Edge<T>* e :v->getAdj()) {
+        Vertex<T>* w  = e->getDest();
         if (w->getNum() == -1) {
-            tarjanHelper(w, result, stk, index);
+            tarjanHelper(w,stack,result,index);
             v->setLow(std::min(v->getLow(), w->getLow()));
-        } else if (w->isProcessing()) {
-            v->setLow(std::min(v->getLow(), w->getNum()));
+        }
+        else if (w->isProcessing()) {
+            v->setLow(std::min(v->getLow(), w->getLow()));
         }
     }
 
-    if (v->getLow() == v->getNum()) {
+    if (v->getNum() == v->getLow()) {
         std::vector<T> component;
         Vertex<T>* w;
         do {
-            w = stk.back();
-            stk.pop_back();
+            w = stack.back();
+            stack.pop_back();
             w->setProcessing(false);
             component.push_back(w->getInfo());
-        } while (w != v);
+        }while (w != v);
         result.push_back(component);
     }
 }
@@ -40,17 +39,17 @@ void tarjanHelper(Vertex<T>* v, std::vector<std::vector<T>>& result, std::vector
 template <typename T>
 std::vector<std::vector<T>> sccTarjan(Graph<T>* g) {
     std::vector<std::vector<T>> result;
-    std::vector<Vertex<T>*> stk;
+    std::vector<Vertex<T>*> stack;
     int index = 0;
 
-    auto vertexSet = g->getVertexSet();
+    std::vector<Vertex<T>*> vertexSet = g->getVertexSet();
+
     for (Vertex<T>* v : vertexSet) {
         if (v->getNum() == -1) {
-            tarjanHelper(v, result, stk, index);
+            tarjanHelper(v, stack, result, index);
         }
     }
 
-    // Reset the vertex attributes to default values
     for (Vertex<T>* v : vertexSet) {
         v->setNum(-1);
         v->setLow(-1);
