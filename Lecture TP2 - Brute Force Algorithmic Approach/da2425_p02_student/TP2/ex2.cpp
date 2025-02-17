@@ -1,10 +1,37 @@
 // By: Gonçalo Leão
 
+//Bruteforce o algoritmo será 2^n temporal, n espacial
 
-bool subsetSumBF(unsigned int A[], unsigned int n, unsigned int T, unsigned int subset[], unsigned int &subsetSize) {
+#include <algorithm>
 
+bool subsetSumBFHelper(unsigned int A[], unsigned int n, unsigned int T, unsigned int index,unsigned int subset[], unsigned int &subsetSize, unsigned int curSum) {
+    if (curSum == T) {
+        return true;
+    }
+    if (index == n || curSum > T) {
+        return false;
+    }
+
+    subset[subsetSize] = A[index];
+    subsetSize++;
+
+    if (subsetSumBFHelper(A, n, T, index+1, subset, subsetSize, curSum + A[index])) {
+        return true;
+    }
+
+    subsetSize--;
+
+    if (subsetSumBFHelper(A, n, T, index+1, subset, subsetSize, curSum)) {
+        return true;
+    }
 
     return false;
+}
+
+bool subsetSumBF(unsigned int A[], unsigned int n, unsigned int T, unsigned int subset[], unsigned int &subsetSize) {
+    std::sort(A, A+n); //dando sort antes para corrigir o backtrack
+    subsetSize = 0;
+    return subsetSumBFHelper(A,n,T,0, subset, subsetSize, 0 );
 }
 
 /// TESTS ///
