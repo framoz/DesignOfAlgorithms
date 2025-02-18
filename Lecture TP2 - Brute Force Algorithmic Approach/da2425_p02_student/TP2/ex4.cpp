@@ -2,10 +2,48 @@
 
 #include <algorithm>
 #include <vector>
-
+// TODO fazer uma média entre peso e valor, ordenar por esse valor e inserir itens fracionados quando o peso for excedido pelo item completo
 double fractionalKnapsackGR(unsigned int values[], unsigned int weights[], unsigned int n, unsigned int maxWeight, double usedItems[]) {
+    double maxValue = 0;
 
-    return 0.0;
+
+    struct Item {
+        double value;
+        double weight;
+        unsigned int index;
+
+        double getValue() {
+            return value/weight;
+        }
+    };
+
+    Item items[n];
+    for (unsigned int i = 0; i < n; i++) {
+        items[i].value = values[i];
+        items[i].weight = weights[i];
+        items[i].index = i;
+    }
+
+    std::sort(items, items + n, [](Item a, Item b) {return a.getValue() > b.getValue(); });
+    double totalWeight = 0;
+
+    for (unsigned int i = 0; i < n || totalWeight > maxWeight; i++) {
+        if (totalWeight + items[i].weight <= maxWeight) {
+            totalWeight += items[i].weight;
+            maxValue += items[i].value;
+            usedItems[items[i].index] = 1;
+        }
+        else {
+            double weightLeft = maxWeight - totalWeight;
+            double weightPercent = weightLeft / items[i].weight;
+            double valueLeft = items[i].value * weightPercent;
+            maxValue += valueLeft;
+            totalWeight = maxWeight;
+            usedItems[items[i].index] = weightPercent;
+        }
+    }
+
+    return maxValue;
 }
 
 /// TESTS ///
