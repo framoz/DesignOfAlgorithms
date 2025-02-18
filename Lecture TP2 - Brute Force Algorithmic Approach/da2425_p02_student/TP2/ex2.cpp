@@ -1,6 +1,7 @@
 // By: Gonçalo Leão
 
-//Bruteforce o algoritmo será 2^n temporal, n espacial
+
+// Bruteforce o algoritmo será (2^n) temporal, n espacial
 
 #include <algorithm>
 
