@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\jorge\Desktop\DA\2024-2025\TP1\2024_2025\da2425_p01_sol\da2425_p01_sol\lib\googletest\googletest\src\gtest-all.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jorge\Desktop\DA\2024-2025\TP1\2024_2025\da2425_p01_sol\da2425_p01_sol\lib\googletest\googlemock\src\gmock-all.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\jorge\Desktop\DA\2024-2025\TP1\2024_2025\da2425_p01_sol\da2425_p01_sol\lib\googletest\googlemock\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{D7C21090-ED8C-30C3-9FA3-75CBF6B3DE95}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

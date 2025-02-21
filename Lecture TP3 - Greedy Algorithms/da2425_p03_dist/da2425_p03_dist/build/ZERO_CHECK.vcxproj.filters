@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\jorge\Desktop\DA\2024-2025\TP1\2024_2025\da2425_p01_sol\da2425_p01_sol\build\CMakeFiles\51ff9f7ad36a18468171b3fe03841156\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{2F583490-924A-3039-9404-48F67C370B29}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
