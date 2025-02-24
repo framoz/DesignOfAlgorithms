@@ -1,0 +1,17 @@
+# ninja log v6
+2	10428	1740413181932729563	lib/googletest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o	a98173c73b4a9e82
+5	2657	1740413181935729601	CMakeFiles/da2425_p03_student.dir/TP3/ex2.cpp.o	d65984811cf09194
+3	4899	1740413181933729575	lib/googletest/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o	34acfa6d0b2667aa
+5	2192	1740413181935729601	CMakeFiles/da2425_p03_student.dir/TP3/ex3.cpp.o	ee4c6e338f33342b
+10516	10611	1740413192446863552	da2425_p03_student	ae48ecf34c1df2e3
+6	2206	1740413181936729614	CMakeFiles/da2425_p03_student.dir/TP3/ex5.cpp.o	78320ce8f63167c
+4	2593	1740413181934729588	CMakeFiles/da2425_p03_student.dir/TP3/ex1.cpp.o	9ef48642fe236690
+10493	10516	1740413192423863259	lib/libgmock_main.a	241d0a31c8d4cc3b
+4	391	1740413181934729588	CMakeFiles/da2425_p03_student.dir/data_structures/UFDS.cpp.o	892e75fbac46c8fa
+4	1741	1740413181934729588	lib/googletest/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o	645618935d8b230b
+10466	10490	1740413192396862914	lib/libgtest_main.a	727bb129d3ce9c3c
+3	1767	1740413181933729575	lib/googletest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o	8ab5256bb591da32
+6	1883	1740413181936729614	CMakeFiles/da2425_p03_student.dir/TP3/ex4.cpp.o	ed75bcae1c4ff658
+10429	10466	1740413192359862443	lib/libgtest.a	8b57d5bbd7cab206
+7	2287	1740413181937729627	CMakeFiles/da2425_p03_student.dir/TP3/ex6.cpp.o	8278470ba2d91410
+10466	10493	1740413192396862914	lib/libgmock.a	1f216604e90001d8
