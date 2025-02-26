@@ -16,7 +16,7 @@ struct CoinInfo {
     CoinInfo(unsigned int v, unsigned int s, unsigned int idx) : value(v), stock(s), originalIndex(idx) {}
 };
 
-void backtrack(unsigned int index, unsigned int remaining, vector<unsigned int> currentCounts, unsigned int currentTotal, const vector<CoinInfo>& sortedCoins, vector<unsigned int>& bestCounts, unsigned int& bestTotal) {
+void backtrack(unsigned int index, unsigned int remaining, vector<unsigned int>& currentCounts, unsigned int currentTotal, const vector<CoinInfo>& sortedCoins, vector<unsigned int>& bestCounts, unsigned int& bestTotal) {
     if (index == sortedCoins.size()) {
         if (remaining == 0 && currentTotal < bestTotal) {
             bestTotal = currentTotal;
@@ -77,28 +77,19 @@ bool changeMakingBF(unsigned int Coin_V[], unsigned int Stock[], unsigned int n,
 }
 
 // Time: O(D*S), Space: O(D), where D is the number of coin values and S is the maximum amount of stock of any value
-bool changeMakingGR(unsigned int C[], unsigned int Stock[], unsigned int n, unsigned int T, unsigned int usedCoins[]) {
+bool changeMakingGR(unsigned int Coin_V[], unsigned int Stock[], unsigned int n, unsigned int T, unsigned int usedCoins[]) {
 
     for (int i = n-1; i >= 0; i--) {
         usedCoins[i] = 0;
         if (T==0) continue;
-        unsigned int n_coins = T / C[i];
-        // std::cout
-        //     << "it:" <<i << "\n"
-        //     << "Start T: " << T << "\n"
-        //     << "Stock: " << Stock[i] << "\n"
-        //     << "n_coins: " << n_coins << "\n";
-
-
-        //if (n_coins == 0) continue;
+        unsigned int n_coins = T / Coin_V[i];
         n_coins = (n_coins > Stock[i]) ? Stock[i] : n_coins;
-        //std::cout <<"n_coins after: "<< n_coins << "\n";
-        T -= n_coins * C[i];
-        //std::cout << "Final T: " << T << "\n";
+
+        T -= n_coins * Coin_V[i];
+
         Stock[i] -= n_coins;
-        //std::cout << "Final Stock: " << Stock[i] << "\n";
+
         usedCoins[i] = n_coins;
-        //std::cout << "Used Coins[" <<i <<"]: " << usedCoins[i] << "\n\n\n";
 
     }
     if (T==0) return true;
