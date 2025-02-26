@@ -3,36 +3,78 @@
 
 #include <algorithm>
 #include <iostream>
+#include <vector>
+#include <climits>
+#include <cstring>
 
-bool changeMakingBF(unsigned int C[], unsigned int Stock[], unsigned int n, unsigned int T, unsigned int usedCoins[]) {
+using namespace std;
 
-    for (int i = n-1; i >= 0; i--) {
-        usedCoins[i] = 0;
-        if (T==0) continue;
-        unsigned int n_coins = T / C[i];
-        // std::cout
-        //     << "it:" <<i << "\n"
-        //     << "Start T: " << T << "\n"
-        //     << "Stock: " << Stock[i] << "\n"
-        //     << "n_coins: " << n_coins << "\n";
+struct CoinInfo {
+    unsigned int value;
+    unsigned int stock;
+    unsigned int originalIndex;
+    CoinInfo(unsigned int v, unsigned int s, unsigned int idx) : value(v), stock(s), originalIndex(idx) {}
+};
 
-
-        //if (n_coins == 0) continue;
-        n_coins = (n_coins > Stock[i]) ? Stock[i] : n_coins;
-        //std::cout <<"n_coins after: "<< n_coins << "\n";
-        T -= n_coins * C[i];
-        //std::cout << "Final T: " << T << "\n";
-        Stock[i] -= n_coins;
-        //std::cout << "Final Stock: " << Stock[i] << "\n";
-        usedCoins[i] = n_coins;
-        //std::cout << "Used Coins[" <<i <<"]: " << usedCoins[i] << "\n\n\n";
-
+void backtrack(unsigned int index, unsigned int remaining, vector<unsigned int> currentCounts, unsigned int currentTotal, const vector<CoinInfo>& sortedCoins, vector<unsigned int>& bestCounts, unsigned int& bestTotal) {
+    if (index == sortedCoins.size()) {
+        if (remaining == 0 && currentTotal < bestTotal) {
+            bestTotal = currentTotal;
+            bestCounts = currentCounts;
+        }
+        return;
     }
-    if (T==0) return true;
-    return false;
+
+    const CoinInfo& coin = sortedCoins[index];
+    unsigned int maxPossible = min(coin.stock, remaining / coin.value);
+
+    for (unsigned int count = maxPossible; ; --count) {
+        unsigned int newRemaining = remaining - count * coin.value;
+        unsigned int newTotal = currentTotal + count;
+
+        if (newTotal >= bestTotal) {
+            if (count == 0) break;
+            continue;
+        }
+
+        vector<unsigned int> newCounts = currentCounts;
+        newCounts[index] = count;
+
+        backtrack(index + 1, newRemaining, newCounts, newTotal, sortedCoins, bestCounts, bestTotal);
+
+        if (count == 0) {
+            break;
+        }
+    }
 }
 
+bool changeMakingBF(unsigned int Coin_V[], unsigned int Stock[], unsigned int n, unsigned int T, unsigned int usedCoins[]) {
+    vector<CoinInfo> sortedCoins;
+    for (unsigned int i = 0; i < n; ++i) {
+        sortedCoins.emplace_back(Coin_V[i], Stock[i], i);
+    }
+    sort(sortedCoins.begin(), sortedCoins.end(), [](const CoinInfo& a, const CoinInfo& b) {
+        return a.value > b.value;
+    });
 
+    vector<unsigned int> bestCounts(n);
+    unsigned int bestTotal = UINT_MAX;
+
+    vector<unsigned int> currentCounts(n);
+    backtrack(0, T, currentCounts, 0, sortedCoins, bestCounts, bestTotal);
+
+    if (bestTotal != UINT_MAX) {
+        memset(usedCoins, 0, n * sizeof(unsigned int));
+        for (unsigned int i = 0; i < sortedCoins.size(); ++i) {
+            unsigned int originalIndex = sortedCoins[i].originalIndex;
+            usedCoins[originalIndex] = bestCounts[i];
+        }
+        return true;
+    }
+
+    return false;
+
+}
 
 // Time: O(D*S), Space: O(D), where D is the number of coin values and S is the maximum amount of stock of any value
 bool changeMakingGR(unsigned int C[], unsigned int Stock[], unsigned int n, unsigned int T, unsigned int usedCoins[]) {
