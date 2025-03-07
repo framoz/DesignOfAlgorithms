@@ -9,12 +9,24 @@
  */
 template <typename T>
 void dfsKruskalPath(Vertex<T> *v) {
- // TODO
+
 }
 
 template <typename T>
 std::vector<Vertex<T> *> kruskal(Graph<T> *g) {
-    // TODO
+
+    std::deque<Edge<T> *> edges;
+    for (Vertex<T> *v : g->getVertexSet()) {
+        v->setLow(-1);
+        v->setProcessing(false);
+        for (Edge<T> *e : v->getAdj()) {
+            edges.push_back(e);
+        }
+    }
+
+    std::sort(edges.begin(), edges.end(), [](Edge<T> *e1, Edge<T> *e2) {return e1->getWeight() < e2->getWeight();});
+
+
     return g->getVertexSet();
 }
 

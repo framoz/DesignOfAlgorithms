@@ -3,24 +3,73 @@
 
 #include "../data_structures/Graph.h"
 #include "../data_structures/MutablePriorityQueue.h"
-
+#include <climits>
 using namespace std;
 
 template <class T>
 bool relax(Edge<T> *edge) { // d[u] + w(u,v) < d[v]
-    // TODO
+    Vertex<T> *src = edge->getOrig();
+    Vertex<T> *dest = edge->getDest();
+    double new_dist = src->getDist() + edge->getWeight();
+
+    if (new_dist < dest->getDist()) {
+        dest->setDist(src->getDist() + edge->getWeight());
+        return true;
+    }
+
     return false;
 }
 
 template <class T>
 void dijkstra(Graph<T> * g, const int &origin) {
-    // TODO
+
+
+
+
+    Vertex<T>* vertex = g->findVertex(origin);
+
+    MutablePriorityQueue<Vertex<T>> pq;
+
+    for (auto v : g->getVertexSet()) {
+        v->setDist(INT_MAX);
+        v->setPath(nullptr);
+        v->setVisited(false);
+        pq.insert(v);
+    }
+
+    vertex->setDist(0);
+    vertex->setVisited(true);
+    pq.decreaseKey(vertex);
+
+
+    while (!pq.empty()) {
+        Vertex<T> *u = pq.extractMin();
+        u->setVisited(true);
+
+        for (auto edge: u->getAdj()) {
+            if (edge->getDest()->isVisited() == false && relax(edge)) {
+
+
+                edge->getDest()->setPath(edge);
+                pq.decreaseKey(edge->getDest());
+            }
+        }
+       // std::cout << u->getInfo() << " -> ";
+    }
 }
 
 template <class T>
 static std::vector<T> getPath(Graph<T> * g, const int &origin, const int &dest) {
     std::vector<T> res;
-    // TODO
+
+    Vertex<T> *cur = g->findVertex(dest);
+
+    do {
+        res.insert(res.begin(), cur->getInfo());
+        cur = cur->getPath()->getOrig();
+    }
+    while (cur->getInfo() != origin);
+    res.insert(res.begin(), cur->getInfo());
     return res;
 }
 
